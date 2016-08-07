@@ -94,7 +94,7 @@ static void dis(lily_msgbuf *msgbuf, uint16_t *buffer, uint16_t *pos, const char
 #define T_VALUE   ADD_FMT("    [%4.d] value:   %d\n",  pos, (int16_t)buffer[pos]);
 #define T_INPUT   ADD_FMT("    [%4.d] <------  #%d\n", pos, buffer[pos]);
 #define T_OUTPUT  ADD_FMT("    [%4.d] ======>  #%d\n", pos, buffer[pos]);
-#define T_JUMP    ADD_FMT("    [%4.d] +>    |  [%d]\n", pos, ci.offset + buffer[pos]);
+#define T_JUMP    ADD_FMT("    [%4.d] +>    |  [%d] (%d)\n", pos, ci.offset + (int16_t)buffer[pos], (int16_t)buffer[pos]);
 #define T_G_IN    ADD_FMT("    [%4.d] <------  #%d (G)\n", pos, buffer[pos]);
 #define T_G_OUT   ADD_FMT("    [%4.d] ======>  #%d (G)\n", pos, buffer[pos]);
 #define T_U_IN    ADD_FMT("    [%4.d] <------  #%d (up)\n", pos, buffer[pos]);
