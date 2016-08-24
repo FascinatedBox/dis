@@ -274,7 +274,7 @@ void lily_dis__dis(lily_state *s)
 }
 
 /**
-define dis_rt[A](f: Function(1): A): String
+define dis_rt[A](f: Function(1 => A)): String
 
 This receives a function that takes any number of input arguments, and returns a
 `String` containing the disassembly of that function. If 'f' is not a native
