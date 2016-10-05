@@ -45,7 +45,7 @@ static const char *opcode_names[] =
     "o_native_call",
     "o_function_call",
     "o_return_val",
-    "o_return_noval",
+    "o_return_unit",
     "o_build_list",
     "o_build_tuple",
     "o_build_hash",
@@ -273,19 +273,4 @@ void lily_dis__dis(lily_state *s)
     lily_return_string(s, lily_new_raw_string(lily_mb_get(msgbuf)));
 }
 
-/**
-define dis_rt[A](f: Function(1 => A)): String
-
-This receives a function that takes any number of input arguments, and returns a
-`String` containing the disassembly of that function. If 'f' is not a native
-function, then "<foreign function>" is returned instead.
-
-This function handles disassembly for functions that do return a value. In the
-future, this function will be removed and 'dis.dis' will be usable for all
-functions.
-*/
-void lily_dis__dis_rt(lily_state *s)
-{
-    lily_dis__dis(s);
-}
 #include "dyna_dis.h"

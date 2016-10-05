@@ -2,6 +2,5 @@
 const char *lily_dynaload_table[] = {
     "\0\0"
     ,"F\0dis\0(Function(1)):String"
-    ,"F\0dis_rt\0[A](Function(1=>A)):String"
     ,"Z"
 };
