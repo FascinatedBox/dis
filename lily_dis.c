@@ -57,6 +57,7 @@ static const char *opcode_names[] =
     "o_get_readonly",
     "o_get_integer",
     "o_get_boolean",
+    "o_get_empty_variant",
     "o_new_instance_basic",
     "o_new_instance_speculative",
     "o_new_instance_tagged",
@@ -156,6 +157,7 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
                 case o_native_call:
                     dis(msgbuf, buffer, &pos, "func:");
                     break;
+                case o_get_empty_variant:
                 case o_build_enum:
                     dis(msgbuf, buffer, &pos, "variant:");
                     break;
