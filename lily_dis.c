@@ -7,8 +7,10 @@
 /**
 package dis
 
-This package provides utilities for disassembling a native function to get an
-idea of what's going on inside.
+This package provides a function that is able to peek into the bytecode of a
+Lily function. This can be installed using Lily's `garden` via:
+
+`garden install github FascinatedBox/dis`
 */
 
 static const char *opcode_names[] =
@@ -255,10 +257,7 @@ define dis(f: Function(1)): String
 
 This receives a function that takes any number of input arguments, and returns a
 `String` containing the disassembly of that function. If 'f' is not a native
-function, then "<foreign function>" is returned instead.
-
-Currently, this function only works on receiving source functions that do not
-return a value. This will be fixed in a future version of Lily.
+function, then `"<foreign function>"` is returned instead.
 */
 void lily_dis__dis(lily_state *s)
 {
