@@ -266,12 +266,12 @@ void lily_dis__dis(lily_state *s)
     lily_function_val *fv = lily_arg_function(s, 0);
 
     if (lily_function_is_foreign(fv)) {
-        lily_return_string(s, lily_new_raw_string("<foreign function>"));
+        lily_return_string(s, lily_new_string("<foreign function>"));
         return;
     }
 
     dump_code(msgbuf, fv);
-    lily_return_string(s, lily_new_raw_string(lily_mb_get(msgbuf)));
+    lily_return_string(s, lily_new_string(lily_mb_get(msgbuf)));
 }
 
 #include "dyna_dis.h"
