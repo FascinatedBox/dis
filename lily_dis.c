@@ -59,6 +59,7 @@ static const char *opcode_names[] =
     "o_get_readonly",
     "o_get_integer",
     "o_get_boolean",
+    "o_get_byte",
     "o_get_empty_variant",
     "o_new_instance_basic",
     "o_new_instance_speculative",
