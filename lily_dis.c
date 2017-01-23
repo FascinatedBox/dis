@@ -1,6 +1,6 @@
 #include "lily_int_opcode.h"
+#include "lily_int_code_iter.h"
 
-#include "lily_api_code_iter.h"
 #include "lily_api_msgbuf.h"
 #include "lily_api_value.h"
 
