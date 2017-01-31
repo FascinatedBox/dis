@@ -262,7 +262,7 @@ function, then `"<foreign function>"` is returned instead.
 */
 void lily_dis__dis(lily_state *s)
 {
-    lily_msgbuf *msgbuf = lily_get_msgbuf(s);
+    lily_msgbuf *msgbuf = lily_get_clean_msgbuf(s);
 
     lily_function_val *fv = lily_arg_function(s, 0);
 
