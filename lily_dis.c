@@ -41,6 +41,7 @@ static const char *opcode_names[] =
     "o_unary_minus",
     "o_jump",
     "o_jump_if",
+    "o_jump_if_not_class",
     "o_integer_for",
     "o_for_setup",
     "o_foreign_call",
@@ -240,6 +241,9 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
                         pos++;
                         T_INPUT
                     }
+                    break;
+                case o_jump_if_not_class:
+                    dis(msgbuf, buffer, &pos, "class:");
                     break;
                 default:
                     break;
