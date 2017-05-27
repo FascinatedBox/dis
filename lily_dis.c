@@ -1,17 +1,34 @@
-#include "lily_int_opcode.h"
-#include "lily_int_code_iter.h"
-
-#include "lily_api_msgbuf.h"
-#include "lily_api_value.h"
-
 /**
-package dis
+library dis
 
 This package provides a function that is able to peek into the bytecode of a
 Lily function. This can be installed using Lily's `garden` via:
 
 `garden install github FascinatedBox/dis`
 */
+
+#include "lily_int_opcode.h"
+#include "lily_int_code_iter.h"
+
+#include "lily_api_msgbuf.h"
+#include "lily_api_value.h"
+
+/** Begin autogen section. **/
+const char *lily_dis_table[] = {
+    "\0\0"
+    ,"F\0dis\0(Function(1)):String"
+    ,"Z"
+};
+#define toplevel_OFFSET 1
+void lily_dis__dis(lily_state *);
+void *lily_dis_loader(lily_state *s, int id)
+{
+    switch (id) {
+        case toplevel_OFFSET + 0: return lily_dis__dis;
+        default: return NULL;
+    }
+}
+/** End autogen section. **/
 
 static const char *opcode_names[] =
 {
@@ -258,7 +275,7 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
 }
 
 /**
-define dis(f: Function(1)): String
+define dis(f: Function($1)): String
 
 This receives a function that takes any number of input arguments, and returns a
 `String` containing the disassembly of that function. If 'f' is not a native
@@ -278,5 +295,3 @@ void lily_dis__dis(lily_state *s)
     dump_code(msgbuf, fv);
     lily_return_string(s, lily_new_string(lily_mb_get(msgbuf)));
 }
-
-#include "dyna_dis.h"
