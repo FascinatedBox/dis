@@ -95,8 +95,6 @@ static const char *opcode_names[] =
     "o_set_upvalue",
     "o_create_closure",
     "o_create_function",
-    "o_load_class_closure",
-    "o_load_closure",
     "o_dynamic_cast",
     "o_interpolation",
     "o_optarg_dispatch",
@@ -232,11 +230,6 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
             switch (op) {
                 case o_create_function:
                     dis(msgbuf, buffer, &pos, "literal:");
-                    break;
-                case o_load_closure:
-                    for (i = 0;i < ci.special_4;i++) {
-                        dis(msgbuf, buffer, &pos, "zap:");
-                    }
                     break;
                 default:
                     pos += ci.special_4;
