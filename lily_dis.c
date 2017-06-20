@@ -280,11 +280,12 @@ void lily_dis__dis(lily_state *s)
 
     lily_function_val *fv = lily_arg_function(s, 0);
 
-    if (lily_function_is_foreign(fv)) {
-        lily_return_string(s, lily_new_string("<foreign function>"));
-        return;
+    if (lily_function_is_foreign(fv))
+        lily_push_string(s,"<foreign function>");
+    else {
+        dump_code(msgbuf, fv);
+        lily_push_string(s, lily_mb_get(msgbuf));
     }
 
-    dump_code(msgbuf, fv);
-    lily_return_string(s, lily_new_string(lily_mb_get(msgbuf)));
+    lily_return_top(s);
 }
