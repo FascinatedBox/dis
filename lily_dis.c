@@ -16,7 +16,7 @@ Lily function. This can be installed using Lily's `garden` via:
 /** Begin autogen section. **/
 const char *lily_dis_table[] = {
     "\0\0"
-    ,"F\0dis\0(Function(1)):String"
+    ,"F\0dis\0(Function($1)):String"
     ,"Z"
 };
 #define toplevel_OFFSET 1
