@@ -32,73 +32,66 @@ void *lily_dis_loader(lily_state *s, int id)
 
 static const char *opcode_names[] =
 {
-    "o_fast_assign",
     "o_assign",
-    "o_integer_add",
-    "o_integer_minus",
-    "o_modulo",
-    "o_integer_mul",
-    "o_integer_div",
-    "o_left_shift",
-    "o_right_shift",
-    "o_bitwise_and",
-    "o_bitwise_or",
-    "o_bitwise_xor",
-    "o_double_add",
-    "o_double_minus",
-    "o_double_mul",
-    "o_double_div",
-    "o_is_equal",
-    "o_not_eq",
-    "o_less",
-    "o_less_eq",
-    "o_greater",
-    "o_greater_eq",
+    "o_assign_noref",
+    "o_int_add",
+    "o_int_minus",
+    "o_int_modulo",
+    "o_int_multiply",
+    "o_int_divide",
+    "o_int_left_shift",
+    "o_int_right_shift",
+    "o_int_bitwise_and",
+    "o_int_bitwise_or",
+    "o_int_bitwise_xor",
+    "o_number_add",
+    "o_number_minus",
+    "o_number_multiply",
+    "o_number_divide",
+    "o_compare_eq",
+    "o_compare_not_eq",
+    "o_compare_greater",
+    "o_compare_greater_eq",
     "o_unary_not",
     "o_unary_minus",
+    "o_unary_bitwise_not",
     "o_jump",
     "o_jump_if",
     "o_jump_if_not_class",
-    "o_integer_for",
+    "o_for_integer",
     "o_for_setup",
-    "o_foreign_call",
-    "o_native_call",
-    "o_function_call",
-    "o_return_val",
+    "o_call_foreign",
+    "o_call_native",
+    "o_call_register",
+    "o_return_value",
     "o_return_unit",
     "o_build_list",
     "o_build_tuple",
     "o_build_hash",
     "o_build_enum",
-    "o_get_item",
-    "o_set_item",
-    "o_get_global",
-    "o_set_global",
-    "o_get_readonly",
-    "o_get_integer",
-    "o_get_boolean",
-    "o_get_byte",
-    "o_get_empty_variant",
-    "o_new_instance_basic",
-    "o_new_instance_speculative",
-    "o_new_instance_tagged",
-    "o_get_property",
-    "o_set_property",
-    "o_push_try",
-    "o_pop_try",
-    "o_except_ignore",
-    "o_except_catch",
-    "o_raise",
-    "o_match_dispatch",
-    "o_variant_decompose",
-    "o_get_upvalue",
-    "o_set_upvalue",
-    "o_create_closure",
-    "o_create_function",
-    "o_dynamic_cast",
+    "o_subscript_get",
+    "o_subscript_set",
+    "o_global_get",
+    "o_global_set",
+    "o_load_readonly",
+    "o_load_integer",
+    "o_load_boolean",
+    "o_load_byte",
+    "o_load_empty_variant",
+    "o_instance_new",
+    "o_get_property_get",
+    "o_set_property_set",
+    "o_catch_push",
+    "o_catch_pop",
+    "o_exception_catch",
+    "o_exception_store",
+    "o_exception_raise",
+    "o_closure_get",
+    "o_closure_set",
+    "o_closure_new",
+    "o_closure_function",
     "o_interpolation",
-    "o_optarg_dispatch",
-    "o_return_from_vm"
+    "o_vm_exit"
 };
 
 static void dis(lily_msgbuf *msgbuf, uint16_t *buffer, uint16_t *pos, const char *str)
@@ -142,74 +135,56 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
                 pos + ci.round_total - 1, buffer[pos],
                 opcode_names[buffer[pos]]);
 
-        if (ci.line)
-            dis(msgbuf, buffer, &pos, "line:");
-
         if (ci.special_1) {
             switch (op) {
                 case o_jump_if:
                     dis(msgbuf, buffer, &pos, "truthy:");
                     break;
-                case o_get_integer:
-                case o_get_boolean:
+                case o_load_integer:
+                case o_load_boolean:
+                case o_load_byte:
                     dis(msgbuf, buffer, &pos, "value:");
                     break;
-                case o_set_global:
+                case o_global_set:
                     pos++;
                     T_G_IN
                     break;
-                case o_get_global:
+                case o_global_get:
                     pos++;
                     T_G_OUT
                     break;
-                case o_function_call:
+                case o_call_register:
                     pos++;
                     T_INPUT
                     break;
-                case o_match_dispatch:
-                    pos++;
-                    T_INPUT
-                    dis(msgbuf, buffer, &pos, "class:");
-                    pos++;
-                    break;
-                case o_foreign_call:
-                case o_native_call:
+                case o_call_foreign:
+                case o_call_native:
                     dis(msgbuf, buffer, &pos, "func:");
                     break;
-                case o_get_empty_variant:
-                case o_build_enum:
+                case o_build_variant:
+                case o_load_empty_variant:
                     dis(msgbuf, buffer, &pos, "variant:");
                     break;
-                case o_dynamic_cast:
-                case o_except_catch:
-                case o_new_instance_basic:
-                case o_new_instance_speculative:
-                case o_new_instance_tagged:
+                case o_exception_catch:
+                case o_instance_new:
                     dis(msgbuf, buffer, &pos, "class:");
                     break;
-                case o_get_readonly:
+                case o_load_readonly:
                     dis(msgbuf, buffer, &pos, "literal:");
                     break;
-                case o_get_property:
-                case o_set_property:
+                case o_property_get:
+                case o_property_set:
                     dis(msgbuf, buffer, &pos, "index:");
                     break;
-                case o_except_ignore:
-                    dis(msgbuf, buffer, &pos, "class:");
-                    dis(msgbuf, buffer, &pos, "pad:");
-                    break;
-                case o_optarg_dispatch:
-                    dis(msgbuf, buffer, &pos, "start:");
-                    break;
-                case o_set_upvalue:
+                case o_closure_set:
                     pos++;
                     T_U_IN
                     break;
-                case o_get_upvalue:
+                case o_closure_get:
                     pos++;
                     T_U_OUT
                     break;
-                case o_create_closure:
+                case o_closure_new:
                     dis(msgbuf, buffer, &pos, "size:");
                     break;
                 default:
@@ -226,41 +201,12 @@ static void dump_code(lily_msgbuf *msgbuf, lily_function_val *fv)
             T_INPUT
         }
 
-        if (ci.special_4) {
-            switch (op) {
-                case o_create_function:
-                    dis(msgbuf, buffer, &pos, "literal:");
-                    break;
-                default:
-                    pos += ci.special_4;
-                    break;
-            }
-        }
-
-        for (i = 0;i < ci.outputs_5;i++) {
+        for (i = 0;i < ci.outputs_4;i++) {
             pos++;
             T_OUTPUT
         }
 
-        if (ci.special_6) {
-            switch (op) {
-                case o_foreign_call:
-                case o_native_call:
-                case o_function_call:
-                    for (i = 0;i < ci.special_6;i++) {
-                        pos++;
-                        T_INPUT
-                    }
-                    break;
-                case o_jump_if_not_class:
-                    dis(msgbuf, buffer, &pos, "class:");
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        for (i = 0;i < ci.jumps_7;i++) {
+        for (i = 0;i < ci.jumps_5;i++) {
             pos++;
             T_JUMP
         }
