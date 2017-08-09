@@ -1,6 +1,6 @@
 # Binary junk
 
-dis.so
+src/dis.so
 
 # CMake-related stuff.
 CMakeFiles
