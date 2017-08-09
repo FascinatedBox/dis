@@ -10,8 +10,7 @@ Lily function. This can be installed using Lily's `garden` via:
 #include "lily_int_opcode.h"
 #include "lily_int_code_iter.h"
 
-#include "lily_api_msgbuf.h"
-#include "lily_api_value.h"
+#include "lily.h"
 
 /** Begin autogen section. **/
 const char *lily_dis_table[] = {
@@ -222,7 +221,7 @@ function, then `"<foreign function>"` is returned instead.
 */
 void lily_dis__dis(lily_state *s)
 {
-    lily_msgbuf *msgbuf = lily_get_clean_msgbuf(s);
+    lily_msgbuf *msgbuf = lily_msgbuf_get(s);
 
     lily_function_val *fv = lily_arg_function(s, 0);
 
@@ -230,7 +229,7 @@ void lily_dis__dis(lily_state *s)
         lily_push_string(s,"<foreign function>");
     else {
         dump_code(msgbuf, fv);
-        lily_push_string(s, lily_mb_get(msgbuf));
+        lily_push_string(s, lily_mb_raw(msgbuf));
     }
 
     lily_return_top(s);
