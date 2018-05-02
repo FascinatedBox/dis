@@ -1,0 +1,7 @@
+{
+    "version": "v0.1.0",
+    "summary": "Print the bytecode of Lily functions.",
+    "source": "https://github.com/FascinatedBox/lily-dis",
+    "license": "MIT",
+    "native": false
+}
