@@ -13,20 +13,17 @@ Lily function. This can be installed using Lily's `garden` via:
 #include "lily.h"
 
 /** Begin autogen section. **/
-const char *lily_dis_table[] = {
+const char *lily_dis_info_table[] = {
     "\0\0"
     ,"F\0dis\0(Function($1)): String"
     ,"Z"
 };
 #define toplevel_OFFSET 1
 void lily_dis__dis(lily_state *);
-void *lily_dis_loader(lily_state *s, int id)
-{
-    switch (id) {
-        case toplevel_OFFSET + 0: return lily_dis__dis;
-        default: return NULL;
-    }
-}
+void (*lily_dis_call_table[])(lily_state *s) = {
+    NULL,
+    lily_dis__dis,
+};
 /** End autogen section. **/
 
 static const char *opcode_names[] =
