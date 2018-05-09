@@ -18,9 +18,8 @@ const char *lily_dis_info_table[] = {
     ,"F\0dis\0(Function($1)): String"
     ,"Z"
 };
-#define toplevel_OFFSET 1
 void lily_dis__dis(lily_state *);
-void (*lily_dis_call_table[])(lily_state *s) = {
+lily_call_entry_func lily_dis_call_table[] = {
     NULL,
     lily_dis__dis,
 };
